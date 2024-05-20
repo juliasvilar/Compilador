@@ -1,0 +1,13 @@
+como dar play no analisador léxico flex
+
+1. abre a pasta do documendo (cd + caminho)
+
+2. dir pra ver oq tem na pasta
+
+3. flex nomeDoArquivo.l (cria o flex .yy)
+
+4. gcc lex.yy.c -o (nomeDoArquivoExecutável)
+
+5. nomeDoArquvioExecutavel (pra executar)
+
+e dps eh so escrever o código 
