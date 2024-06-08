@@ -10,4 +10,12 @@ como dar play no analisador léxico flex
 
 5. nomeDoArquvioExecutavel (pra executar)
 
-e dps eh so escrever o código 
+e dps eh so escrever o código
+
+o bison:
+
+1. entra na pasta com cd
+
+2. bison -d (nome).y
+
+3. gcc y.tab.c lex.yy -o(nome)
