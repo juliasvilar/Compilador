@@ -1,0 +1,11 @@
+# Gera o scanner.c a partir do scanner.l
+flex -o scanner.c scanner.l
+
+# Gera o parser.c e parser.h a partir do parser.y
+bison -d -o parser.c parser.y
+
+# Compila o semantic.c
+gcc -c semantic.c -o semantic.o
+
+# Compila e linka todos os arquivos
+gcc scanner.c parser.c semantic.o -o parser -lfl
