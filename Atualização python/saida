@@ -1,0 +1,67 @@
+LexToken(INT,'int',2,1)
+LexToken(FUNCAO_PRINCIPAL,'main',2,5)
+LexToken(SIMBOLO_ESP,'(',2,9)
+LexToken(SIMBOLO_ESP,')',2,10)
+LexToken(SIMBOLO_ESP,'{',2,12)
+LexToken(PRINTF,'printf',3,18)
+LexToken(SIMBOLO_ESP,'(',3,24)
+LexToken(TEXTO,'"Hello, world!"',3,25)
+LexToken(SIMBOLO_ESP,')',3,40)
+LexToken(SIMBOLO_ESP,';',3,41)
+LexToken(RETURN,'return',4,47)
+LexToken(NUM_INT,0,4,54)
+LexToken(SIMBOLO_ESP,';',4,55)
+LexToken(SIMBOLO_ESP,'}',5,57)
+Testando o analisador léxico:
+LexToken(INT,'int',7,5)
+LexToken(FUNCAO_PRINCIPAL,'main',7,9)
+LexToken(SIMBOLO_ESP,'(',7,13)
+LexToken(SIMBOLO_ESP,')',7,14)
+LexToken(SIMBOLO_ESP,'{',7,16)
+LexToken(PRINTF,'printf',8,26)
+LexToken(SIMBOLO_ESP,'(',8,32)
+LexToken(TEXTO,'"Hello, world!"',8,33)
+LexToken(SIMBOLO_ESP,')',8,48)
+LexToken(SIMBOLO_ESP,';',8,49)
+LexToken(RETURN,'return',9,59)
+LexToken(NUM_INT,0,9,66)
+LexToken(SIMBOLO_ESP,';',9,67)
+LexToken(SIMBOLO_ESP,'}',10,73)
+
+Testando o analisador sintático:
+Syntax error at '('
+
+Testando o analisador semântico:
+
+Variáveis:
+Nome: x, Tipo: int
+Nome: y, Tipo: float
+Nome: z, Tipo: boolean
+
+Funções:
+Nome: soma, Tipo de Retorno: int, Tipos de Parâmetros: ['int', 'int']
+Nome: media, Tipo de Retorno: float, Tipos de Parâmetros: ['float', 'float']
+
+Verificando declarações de variáveis:
+Existe a variável 'x'? True
+Existe a variável 'w'? False
+
+Verificando compatibilidade de tipos:
+int e float são compatíveis? True
+boolean e float são compatíveis? False
+
+Verificando o tipo de uma variável:
+Tipo da variável 'y': float
+Tipo da variável 'w': None
+
+Verificando declarações de funções:
+Existe a função 'soma'? True
+Existe a função 'produto'? False
+
+Verificando tipos de parâmetros de funções:
+Tipos de parâmetros da função 'soma' são compatíveis com [int, int]? True
+Tipos de parâmetros da função 'media' são compatíveis com [int, int]? False
+
+Verificando tipo de retorno de funções:
+Tipo de retorno da função 'soma': int
+Tipo de retorno da função 'produto': None
