@@ -29,7 +29,7 @@ def p_type_specifier(p):
     pass
 
 def p_fun_declaration(p):
-    'fun_declaration : type_specifier ID LPAREN params RPAREN compound_stmt'
+    '''fun_declaration : type_specifier FUNCAO_PRINCIPAL LPAREN RPAREN compound_stmt'''
     pass
 
 def p_params(p):
