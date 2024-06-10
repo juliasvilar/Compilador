@@ -1,192 +1,181 @@
 import ply.yacc as yacc
 from lexer import tokens
 
-def p_programa(p):
-    'programa : declaracoes'
-    p[0] = p[1]
-
-def p_declaracoes(p):
-    '''declaracoes : declaracao
-                   | declaracoes declaracao'''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    else:
-        p[1].append(p[2])
-        p[0] = p[1]
-
-def p_declaracao(p):
-    '''declaracao : declaracao_variavel
-                  | declaracao_funcao
-                  | comentario'''
-    p[0] = p[1]
-
-def p_declaracao_variavel(p):
-    '''declaracao_variavel : tipo ID ';' 
-                           | tipo ID '=' expressao ';' '''
-    if len(p) == 4:
-        p[0] = ('declaracao_variavel', p[1], p[2])
-    else:
-        p[0] = ('declaracao_variavel', p[1], p[2], p[4])
-
-def p_tipo(p):
-    '''tipo : INT
-            | FLOAT
-            | DOUBLE
-            | CHAR
-            | BOOLEAN'''
-    p[0] = p[1]
-
-def p_declaracao_funcao(p):
-    '''declaracao_funcao : tipo ID '(' parametros ')' bloco'''
-    p[0] = ('declaracao_funcao', p[1], p[2], p[4], p[6])
-
-def p_parametros(p):
-    '''parametros : parametro
-                  | parametros ',' parametro'''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    else:
-        p[1].append(p[3])
-        p[0] = p[1]
-
-def p_parametro(p):
-    '''parametro : tipo ID'''
-    p[0] = ('parametro', p[1], p[2])
-
-def p_bloco(p):
-    'bloco : "{" declaracoes "}"'
-    p[0] = p[2]
-
-def p_comentario(p):
-    'comentario : COMENTARIO'
+def p_program(p):
+    'program : declaration_list'
     pass
 
-def p_expressao(p):
-    '''expressao : atribuicao
-                 | expressao_logica
-                 | expressao_relacional
-                 | expressao_aritmetica'''
-    p[0] = p[1]
+def p_declaration_list(p):
+    '''declaration_list : declaration_list declaration
+                        | declaration'''
+    pass
 
-def p_atribuicao(p):
-    '''atribuicao : ID '=' expressao
-                  | ID ADD_ASSIGN expressao
-                  | ID SUB_ASSIGN expressao
-                  | ID MUL_ASSIGN expressao
-                  | ID DIV_ASSIGN expressao
-                  | ID MOD_ASSIGN expressao
-                  | ID LAND_ASSIGN expressao
-                  | ID LOR_ASSIGN expressao'''
-    p[0] = ('atribuicao', p[2], p[1], p[3])
+def p_declaration(p):
+    '''declaration : var_declaration
+                   | fun_declaration'''
+    pass
 
-def p_expressao_logica(p):
-    '''expressao_logica : expressao_relacional
-                        | expressao_logica LAND expressao_relacional
-                        | expressao_logica LOR expressao_relacional
-                        | LNOT expressao_relacional'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = (p[2], p[1], p[3])
+def p_var_declaration(p):
+    '''var_declaration : type_specifier ID SEMICOLON
+                       | type_specifier ID ASSIGN expression SEMICOLON'''
+    pass
 
-def p_expressao_relacional(p):
-    '''expressao_relacional : expressao_aritmetica
-                            | expressao_aritmetica '>' expressao_aritmetica
-                            | expressao_aritmetica GE expressao_aritmetica
-                            | expressao_aritmetica '<' expressao_aritmetica
-                            | expressao_aritmetica LE expressao_aritmetica
-                            | expressao_aritmetica NE expressao_aritmetica
-                            | expressao_aritmetica EQ expressao_aritmetica'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = (p[2], p[1], p[3])
+def p_type_specifier(p):
+    '''type_specifier : INT
+                      | FLOAT
+                      | DOUBLE
+                      | CHAR
+                      | BOOLEAN'''
+    pass
 
-def p_expressao_aritmetica(p):
-    '''expressao_aritmetica : expressao_multiplicativa
-                             | expressao_aritmetica '+' expressao_multiplicativa
-                             | expressao_aritmetica '-' expressao_multiplicativa'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = (p[2], p[1], p[3])
+def p_fun_declaration(p):
+    'fun_declaration : type_specifier ID LPAREN params RPAREN compound_stmt'
+    pass
 
-def p_expressao_multiplicativa(p):
-    '''expressao_multiplicativa : expressao_unaria
-                                  | expressao_multiplicativa '*' expressao_unaria
-                                  | expressao_multiplicativa '/' expressao_unaria
-                                  | expressao_multiplicativa '%' expressao_unaria'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = (p[2], p[1], p[3])
+def p_params(p):
+    '''params : param_list
+              | VOID'''
+    pass
 
-def p_expressao_unaria(p):
-    '''expressao_unaria : expressao_postfix
-                         | '-' expressao_unaria
-                         | INCREMENT expressao_postfix
-                         | DECREMENT expressao_postfix'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = (p[1], p[2])
+def p_param_list(p):
+    '''param_list : param_list COMMA param
+                  | param'''
+    pass
 
-def p_expressao_postfix(p):
-    '''expressao_postfix : primaria
-                         | primaria '[' expressao ']'
-                         | primaria '(' argumentos ')'
-                         | primaria '.' ID
-                         | primaria ARROW ID'''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 4:
-        p[0] = (p[2], p[1], p[3])
-    else:
-        p[0] = (p[1], p[3])
+def p_param(p):
+    'param : type_specifier ID'
+    pass
 
-def p_primaria(p):
-    '''primaria : ID
-                | NUM_INT
-                | NUM_DEC
-                | TEXTO
-                | '(' expressao ')' '''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = p[2]
+def p_compound_stmt(p):
+    'compound_stmt : LBRACE local_declarations statement_list RBRACE'
+    pass
 
-def p_argumentos(p):
-    '''argumentos : expressoes
-                  | '''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = []
+def p_local_declarations(p):
+    '''local_declarations : local_declarations var_declaration
+                          | empty'''
+    pass
 
-def p_expressoes(p):
-    '''expressoes : expressao
-                  | expressoes ',' expressao'''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    else:
-        p[1].append(p[3])
-        p[0] = p[1]
+def p_statement_list(p):
+    '''statement_list : statement_list statement
+                      | empty'''
+    pass
+
+def p_statement(p):
+    '''statement : expression_stmt
+                 | compound_stmt
+                 | selection_stmt
+                 | iteration_stmt
+                 | return_stmt
+                 | print_stmt'''
+    pass
+
+def p_expression_stmt(p):
+    '''expression_stmt : expression SEMICOLON
+                       | SEMICOLON'''
+    pass
+
+def p_selection_stmt(p):
+    '''selection_stmt : IF LPAREN expression RPAREN statement ELSE statement
+                      | IF LPAREN expression RPAREN statement'''
+    pass
+
+def p_iteration_stmt(p):
+    '''iteration_stmt : WHILE LPAREN expression RPAREN statement
+                      | FOR LPAREN expression_stmt expression_stmt expression RPAREN statement'''
+    pass
+
+def p_return_stmt(p):
+    '''return_stmt : RETURN SEMICOLON
+                   | RETURN expression SEMICOLON'''
+    pass
+
+def p_print_stmt(p):
+    '''print_stmt : PRINTF LPAREN TEXTO RPAREN SEMICOLON
+                  | PRINTF LPAREN expression RPAREN SEMICOLON'''
+    pass
+
+def p_expression(p):
+    '''expression : assignment
+                  | simple_expression'''
+    pass
+
+def p_assignment(p):
+    '''assignment : var ASSIGN expression
+                  | var ADD_ASSIGN expression
+                  | var SUB_ASSIGN expression
+                  | var MUL_ASSIGN expression
+                  | var DIV_ASSIGN expression
+                  | var MOD_ASSIGN expression'''
+    pass
+
+def p_var(p):
+    '''var : ID
+           | ID LBRACKET expression RBRACKET'''
+    pass
+
+def p_simple_expression(p):
+    '''simple_expression : additive_expression relop additive_expression
+                         | additive_expression'''
+    pass
+
+def p_relop(p):
+    '''relop : GE
+             | LE
+             | GT
+             | LT
+             | EQ
+             | NE'''
+    pass
+
+def p_additive_expression(p):
+    '''additive_expression : additive_expression addop term
+                           | term'''
+    pass
+
+def p_addop(p):
+    '''addop : PLUS
+             | MINUS'''
+    pass
+
+def p_term(p):
+    '''term : term mulop factor
+            | factor'''
+    pass
+
+def p_mulop(p):
+    '''mulop : TIMES
+             | DIVIDE
+             | MOD'''
+    pass
+
+def p_factor(p):
+    '''factor : LPAREN expression RPAREN
+              | var
+              | call
+              | NUM_INT
+              | NUM_DEC
+              | TEXTO'''
+    pass
+
+def p_call(p):
+    'call : ID LPAREN args RPAREN'
+    pass
+
+def p_args(p):
+    '''args : arg_list
+            | empty'''
+    pass
+
+def p_arg_list(p):
+    '''arg_list : arg_list COMMA expression
+                | expression'''
+    pass
+
+def p_empty(p):
+    'empty :'
+    pass
 
 def p_error(p):
-    if p:
-        print("Erro de sintaxe na entrada:", p)
-    else:
-        print("Erro de sintaxe: Fim inesperado do arquivo")
+    print(f"Syntax error at '{p.value}'")
 
 parser = yacc.yacc()
-
-# Teste
-data = '''
-int main() {
-    int a = 5;
-    float b = 3.14;
-    return 0;
-}
-'''
-
-parser.parse(data)
