@@ -1,5 +1,6 @@
 import ply.lex as lex
 
+# Definindo os tokens
 tokens = (
     'INT',
     'FLOAT',
@@ -20,8 +21,10 @@ tokens = (
     'SIMBOLO_ESP'
 )
 
-t_ignore = ' \t\n'
+# Ignorar espaços em branco e tabulações
+t_ignore = ' \t'
 
+# Definindo expressões regulares para tokens
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'ID')
@@ -43,7 +46,7 @@ def t_TEXTO(t):
 
 def t_COMENTARIO(t):
     r'\/\/.*'
-    pass
+    pass  # Comentários são ignorados
 
 def t_newline(t):
     r'\n+'
@@ -53,6 +56,7 @@ def t_error(t):
     print("Erro: Caractere não reconhecido '%s'" % t.value[0])
     t.lexer.skip(1)
 
+# Palavras reservadas
 reserved = {
     'void': 'PALAVRA_RES',
     'scanf': 'PALAVRA_RES',
@@ -73,8 +77,14 @@ reserved = {
     'main': 'FUNCAO_PRINCIPAL'
 }
 
+# Definindo tokens para operadores e símbolos especiais
+t_OPERADOR = r'[\+\-\*/=<>!&|]'
+t_SIMBOLO_ESP = r'[\(\){};,\[\]]'
+
+# Construindo o lexer
 lexer = lex.lex()
 
+# Código de teste
 data = '''
 int main() {
     printf("Hello, world!");
@@ -82,10 +92,12 @@ int main() {
 }
 '''
 
+# Alimente o lexer com o código de teste
 lexer.input(data)
 
+# Tokenize e imprima os tokens
 while True:
     tok = lexer.token()
-    if tok is None:
+    if not tok:
         break
     print(tok)
