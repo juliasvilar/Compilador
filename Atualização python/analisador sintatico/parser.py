@@ -3,23 +3,30 @@ from lexer import tokens
 
 def p_programa(p):
     'programa : declaracoes'
-    pass
+    p[0] = p[1]
 
 def p_declaracoes(p):
     '''declaracoes : declaracao
                    | declaracoes declaracao'''
-    pass
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[1].append(p[2])
+        p[0] = p[1]
 
 def p_declaracao(p):
     '''declaracao : declaracao_variavel
                   | declaracao_funcao
                   | comentario'''
-    pass
+    p[0] = p[1]
 
 def p_declaracao_variavel(p):
-    '''declaracao_variavel : tipo ID ';'
+    '''declaracao_variavel : tipo ID ';' 
                            | tipo ID '=' expressao ';' '''
-    pass
+    if len(p) == 4:
+        p[0] = ('declaracao_variavel', p[1], p[2])
+    else:
+        p[0] = ('declaracao_variavel', p[1], p[2], p[4])
 
 def p_tipo(p):
     '''tipo : INT
@@ -27,24 +34,28 @@ def p_tipo(p):
             | DOUBLE
             | CHAR
             | BOOLEAN'''
-    pass
+    p[0] = p[1]
 
 def p_declaracao_funcao(p):
     '''declaracao_funcao : tipo ID '(' parametros ')' bloco'''
-    pass
+    p[0] = ('declaracao_funcao', p[1], p[2], p[4], p[6])
 
 def p_parametros(p):
     '''parametros : parametro
                   | parametros ',' parametro'''
-    pass
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[1].append(p[3])
+        p[0] = p[1]
 
 def p_parametro(p):
     '''parametro : tipo ID'''
-    pass
+    p[0] = ('parametro', p[1], p[2])
 
 def p_bloco(p):
     'bloco : "{" declaracoes "}"'
-    pass
+    p[0] = p[2]
 
 def p_comentario(p):
     'comentario : COMENTARIO'
@@ -55,7 +66,7 @@ def p_expressao(p):
                  | expressao_logica
                  | expressao_relacional
                  | expressao_aritmetica'''
-    pass
+    p[0] = p[1]
 
 def p_atribuicao(p):
     '''atribuicao : ID '=' expressao
@@ -66,14 +77,17 @@ def p_atribuicao(p):
                   | ID MOD_ASSIGN expressao
                   | ID LAND_ASSIGN expressao
                   | ID LOR_ASSIGN expressao'''
-    pass
+    p[0] = ('atribuicao', p[2], p[1], p[3])
 
 def p_expressao_logica(p):
     '''expressao_logica : expressao_relacional
                         | expressao_logica LAND expressao_relacional
                         | expressao_logica LOR expressao_relacional
                         | LNOT expressao_relacional'''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = (p[2], p[1], p[3])
 
 def p_expressao_relacional(p):
     '''expressao_relacional : expressao_aritmetica
@@ -83,27 +97,39 @@ def p_expressao_relacional(p):
                             | expressao_aritmetica LE expressao_aritmetica
                             | expressao_aritmetica NE expressao_aritmetica
                             | expressao_aritmetica EQ expressao_aritmetica'''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = (p[2], p[1], p[3])
 
 def p_expressao_aritmetica(p):
     '''expressao_aritmetica : expressao_multiplicativa
                              | expressao_aritmetica '+' expressao_multiplicativa
                              | expressao_aritmetica '-' expressao_multiplicativa'''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = (p[2], p[1], p[3])
 
 def p_expressao_multiplicativa(p):
     '''expressao_multiplicativa : expressao_unaria
                                   | expressao_multiplicativa '*' expressao_unaria
                                   | expressao_multiplicativa '/' expressao_unaria
                                   | expressao_multiplicativa '%' expressao_unaria'''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = (p[2], p[1], p[3])
 
 def p_expressao_unaria(p):
     '''expressao_unaria : expressao_postfix
                          | '-' expressao_unaria
                          | INCREMENT expressao_postfix
                          | DECREMENT expressao_postfix'''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = (p[1], p[2])
 
 def p_expressao_postfix(p):
     '''expressao_postfix : primaria
@@ -111,7 +137,12 @@ def p_expressao_postfix(p):
                          | primaria '(' argumentos ')'
                          | primaria '.' ID
                          | primaria ARROW ID'''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    elif len(p) == 4:
+        p[0] = (p[2], p[1], p[3])
+    else:
+        p[0] = (p[1], p[3])
 
 def p_primaria(p):
     '''primaria : ID
@@ -119,17 +150,27 @@ def p_primaria(p):
                 | NUM_DEC
                 | TEXTO
                 | '(' expressao ')' '''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[2]
 
 def p_argumentos(p):
     '''argumentos : expressoes
                   | '''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = []
 
 def p_expressoes(p):
     '''expressoes : expressao
                   | expressoes ',' expressao'''
-    pass
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[1].append(p[3])
+        p[0] = p[1]
 
 def p_error(p):
     if p:
