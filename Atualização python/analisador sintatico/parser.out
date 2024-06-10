@@ -1,0 +1,183 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BIBLIOTECA
+    CONDICIONAL
+    FUNCAO_PRINCIPAL
+    FUNCAO_RECURSIVA
+    OPERADOR
+    PALAVRA_RES
+    RETORNO
+    SIMBOLO_ESP
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> declaration_list
+Rule 2     declaration_list -> declaration_list declaration
+Rule 3     declaration_list -> declaration
+Rule 4     declaration -> var_declaration
+Rule 5     declaration -> fun_declaration
+Rule 6     var_declaration -> type_specifier ID SEMICOLON
+Rule 7     var_declaration -> type_specifier ID ASSIGN expression SEMICOLON
+Rule 8     type_specifier -> INT
+Rule 9     type_specifier -> FLOAT
+Rule 10    type_specifier -> DOUBLE
+Rule 11    type_specifier -> CHAR
+Rule 12    type_specifier -> BOOLEAN
+Rule 13    fun_declaration -> type_specifier ID LPAREN params RPAREN compound_stmt
+Rule 14    params -> param_list
+Rule 15    params -> VOID
+Rule 16    param_list -> param_list COMMA param
+Rule 17    param_list -> param
+Rule 18    param -> type_specifier ID
+Rule 19    compound_stmt -> LBRACE local_declarations statement_list RBRACE
+Rule 20    local_declarations -> local_declarations var_declaration
+Rule 21    local_declarations -> empty
+Rule 22    statement_list -> statement_list statement
+Rule 23    statement_list -> empty
+Rule 24    statement -> expression_stmt
+Rule 25    statement -> compound_stmt
+Rule 26    statement -> selection_stmt
+Rule 27    statement -> iteration_stmt
+Rule 28    statement -> return_stmt
+Rule 29    statement -> print_stmt
+Rule 30    expression_stmt -> expression SEMICOLON
+Rule 31    expression_stmt -> SEMICOLON
+Rule 32    selection_stmt -> IF LPAREN expression RPAREN statement ELSE statement
+Rule 33    selection_stmt -> IF LPAREN expression RPAREN statement
+Rule 34    iteration_stmt -> WHILE LPAREN expression RPAREN statement
+Rule 35    iteration_stmt -> FOR LPAREN expression_stmt expression_stmt expression RPAREN statement
+Rule 36    return_stmt -> RETURN SEMICOLON
+Rule 37    return_stmt -> RETURN expression SEMICOLON
+Rule 38    print_stmt -> PRINTF LPAREN TEXTO RPAREN SEMICOLON
+Rule 39    print_stmt -> PRINTF LPAREN expression RPAREN SEMICOLON
+Rule 40    expression -> assignment
+Rule 41    expression -> simple_expression
+Rule 42    assignment -> var ASSIGN expression
+Rule 43    assignment -> var ADD_ASSIGN expression
+Rule 44    assignment -> var SUB_ASSIGN expression
+Rule 45    assignment -> var MUL_ASSIGN expression
+Rule 46    assignment -> var DIV_ASSIGN expression
+Rule 47    assignment -> var MOD_ASSIGN expression
+Rule 48    var -> ID
+Rule 49    var -> ID LBRACKET expression RBRACKET
+Rule 50    simple_expression -> additive_expression relop additive_expression
+Rule 51    simple_expression -> additive_expression
+Rule 52    relop -> GE
+Rule 53    relop -> LE
+Rule 54    relop -> GT
+Rule 55    relop -> LT
+Rule 56    relop -> EQ
+Rule 57    relop -> NE
+Rule 58    additive_expression -> additive_expression addop term
+Rule 59    additive_expression -> term
+Rule 60    addop -> PLUS
+Rule 61    addop -> MINUS
+Rule 62    term -> term mulop factor
+Rule 63    term -> factor
+Rule 64    mulop -> TIMES
+Rule 65    mulop -> DIVIDE
+Rule 66    mulop -> MOD
+Rule 67    factor -> LPAREN expression RPAREN
+Rule 68    factor -> var
+Rule 69    factor -> call
+Rule 70    factor -> NUM_INT
+Rule 71    factor -> NUM_DEC
+Rule 72    factor -> TEXTO
+Rule 73    call -> ID LPAREN args RPAREN
+Rule 74    args -> arg_list
+Rule 75    args -> empty
+Rule 76    arg_list -> arg_list COMMA expression
+Rule 77    arg_list -> expression
+Rule 78    empty -> <empty>
+
+Terminals, with rules where they appear
+
+BIBLIOTECA           : 
+BOOLEAN              : 12
+CHAR                 : 11
+CONDICIONAL          : 
+DOUBLE               : 10
+FLOAT                : 9
+FUNCAO_PRINCIPAL     : 
+FUNCAO_RECURSIVA     : 
+ID                   : 6 7 13 18 48 49 73
+INT                  : 8
+LBRACKET             : 49
+NUM_DEC              : 71
+NUM_INT              : 70
+OPERADOR             : 
+PALAVRA_RES          : 
+RBRACKET             : 49
+RETORNO              : 
+SIMBOLO_ESP          : 
+TEXTO                : 38 72
+error                : 
+
+Nonterminals, with rules where they appear
+
+ADD_ASSIGN           : 43
+ASSIGN               : 7 42
+COMMA                : 16 76
+DIVIDE               : 65
+DIV_ASSIGN           : 46
+ELSE                 : 32
+EQ                   : 56
+FOR                  : 35
+GE                   : 52
+GT                   : 54
+IF                   : 32 33
+LBRACE               : 19
+LE                   : 53
+LPAREN               : 13 32 33 34 35 38 39 67 73
+LT                   : 55
+MINUS                : 61
+MOD                  : 66
+MOD_ASSIGN           : 47
+MUL_ASSIGN           : 45
+NE                   : 57
+PLUS                 : 60
+PRINTF               : 38 39
+RBRACE               : 19
+RETURN               : 36 37
+RPAREN               : 13 32 33 34 35 38 39 67 73
+SEMICOLON            : 6 7 30 31 36 37 38 39
+SUB_ASSIGN           : 44
+TIMES                : 64
+VOID                 : 15
+WHILE                : 34
+additive_expression  : 50 50 51 58
+addop                : 58
+arg_list             : 74 76
+args                 : 73
+assignment           : 40
+call                 : 69
+compound_stmt        : 13 25
+declaration          : 2 3
+declaration_list     : 1 2
+empty                : 21 23 75
+expression           : 7 30 32 33 34 35 37 39 42 43 44 45 46 47 49 67 76 77
+expression_stmt      : 24 35 35
+factor               : 62 63
+fun_declaration      : 5
+iteration_stmt       : 27
+local_declarations   : 19 20
+mulop                : 62
+param                : 16 17
+param_list           : 14 16
+params               : 13
+print_stmt           : 29
+program              : 0
+relop                : 50
+return_stmt          : 28
+selection_stmt       : 26
+simple_expression    : 41
+statement            : 22 32 32 33 34 35
+statement_list       : 19 22
+term                 : 58 59 62
+type_specifier       : 6 7 13 18
+var                  : 42 43 44 45 46 47 68
+var_declaration      : 4 20
+
