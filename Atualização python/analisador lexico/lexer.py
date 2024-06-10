@@ -38,7 +38,7 @@ def t_NUM_DEC(t):
     return t
 
 def t_TEXTO(t):
-    r'\"[^\"]*\"'
+    r'\"([^\\\"]|\\.)*\"'
     return t
 
 def t_COMENTARIO(t):
@@ -86,6 +86,6 @@ lexer.input(data)
 
 while True:
     tok = lexer.token()
-    if not tok:
+    if tok is None:
         break
     print(tok)
