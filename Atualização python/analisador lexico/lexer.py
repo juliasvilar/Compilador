@@ -64,7 +64,7 @@ reserved = {
     'return': 'RETURN',
     'main': 'FUNCAO_PRINCIPAL'
 }
-s
+
 t_OPERADOR = r'[\+\-\*/=<>!&|]'
 t_SIMBOLO_ESP = r'[\(\){};,\[\]]'
 
