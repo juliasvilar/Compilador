@@ -1,6 +1,5 @@
 import ply.lex as lex
 
-# Lista de tokens
 tokens = (
     'INT', 'FLOAT', 'DOUBLE', 'CHAR', 'BOOLEAN', 'ID', 'NUM_INT', 'NUM_DEC', 
     'TEXTO', 'CONDICIONAL', 'FUNCAO_RECURSIVA', 'RETORNO', 'FUNCAO_PRINCIPAL', 
@@ -11,7 +10,6 @@ tokens = (
     'RPAREN', 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET', 'SEMICOLON', 'COMMA'
 )
 
-# Palavras reservadas
 reserved = {
     'void': 'VOID',
     'scanf': 'PALAVRA_RES',
@@ -32,7 +30,6 @@ reserved = {
     'main': 'FUNCAO_PRINCIPAL'
 }
 
-# Regras para tokens simples
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -59,10 +56,8 @@ t_RBRACKET = r'\]'
 t_SEMICOLON = r';'
 t_COMMA = r','
 
-# Ignorar espaços e tabs
 t_ignore = ' \t'
 
-# Regras para tokens complexos
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'ID')
