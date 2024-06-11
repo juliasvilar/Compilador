@@ -4,7 +4,7 @@ import semantic
 
 def test_lexer():
     data = '''
-    int main () {
+    int main() {
         printf("Hello, world!");
         return 0;
     }
@@ -32,21 +32,20 @@ def test_parser():
         print("Erro sintático:", e)
 
 def test_semantic_analyzer():
-    # Adicionando algumas variáveis para teste
     semantic.adicionarVariavel("x", "int")
     semantic.adicionarVariavel("y", "float")
 
-    # Exemplo de código com erros semânticos
     data = '''
-    int main() {
+    int main() { 
+        h = 10;
         int x;
         float y;
         x = 10;
         y = 3.14;
 
-        z = soma(x, y); // Erro: variável 'z' não declarada e tipos incompatíveis para a função 'soma'
-        a = 5; // Erro: variável 'a' não declarada
-        x = "texto"; // Erro: atribuição de tipo incompatível (string para int)
+        z = soma(x, y);
+        a = 5;
+        x = "texto";
         printf("Hello, world!");
         return 0;
     }
