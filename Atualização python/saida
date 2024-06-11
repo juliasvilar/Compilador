@@ -1,53 +1,22 @@
 Testando o analisador léxico:
 LexToken(INT,'int',2,5)
 LexToken(FUNCAO_PRINCIPAL,'main',2,9)
-LexToken(SIMBOLO_ESP,'(',2,13)
-LexToken(SIMBOLO_ESP,')',2,14)
-LexToken(SIMBOLO_ESP,'{',2,16)
+LexToken(LPAREN,'(',2,13)
+LexToken(RPAREN,')',2,14)
+LexToken(LBRACE,'{',2,16)
 LexToken(PRINTF,'printf',3,26)
-LexToken(SIMBOLO_ESP,'(',3,32)
+LexToken(LPAREN,'(',3,32)
 LexToken(TEXTO,'"Hello, world!"',3,33)
-LexToken(SIMBOLO_ESP,')',3,48)
-LexToken(SIMBOLO_ESP,';',3,49)
+LexToken(RPAREN,')',3,48)
+LexToken(SEMICOLON,';',3,49)
 LexToken(RETURN,'return',4,59)
 LexToken(NUM_INT,0,4,66)
-LexToken(SIMBOLO_ESP,';',4,67)
-LexToken(SIMBOLO_ESP,'}',5,73)
+LexToken(SEMICOLON,';',4,67)
+LexToken(RBRACE,'}',5,73)
 
 Testando o analisador sintático:
-Syntax error at '('
+A análise sintática foi concluída sem erros.
 
 Testando o analisador semântico:
-
-Variáveis:
-Nome: x, Tipo: int
-Nome: y, Tipo: float
-Nome: z, Tipo: boolean
-
-Funções:
-Nome: soma, Tipo de Retorno: int, Tipos de Parâmetros: ['int', 'int']
-Nome: media, Tipo de Retorno: float, Tipos de Parâmetros: ['float', 'float']
-
-Verificando declarações de variáveis:
-Existe a variável 'x'? True
-Existe a variável 'w'? False
-
-Verificando compatibilidade de tipos:
-int e float são compatíveis? True
-boolean e float são compatíveis? False
-
-Verificando o tipo de uma variável:
-Tipo da variável 'y': float
-Tipo da variável 'w': None
-
-Verificando declarações de funções:
-Existe a função 'soma'? True
-Existe a função 'produto'? False
-
-Verificando tipos de parâmetros de funções:
-Tipos de parâmetros da função 'soma' são compatíveis com [int, int]? True
-Tipos de parâmetros da função 'media' são compatíveis com [int, int]? False
-
-Verificando tipo de retorno de funções:
-Tipo de retorno da função 'soma': int
-Tipo de retorno da função 'produto': None
+Erro semântico: variável 'h' não declarada na linha 3
+Houve um erro na análise semântica.
