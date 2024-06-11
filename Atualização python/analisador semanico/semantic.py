@@ -1,3 +1,5 @@
+# semantic.py
+
 class Variavel:
     def __init__(self, nome, tipo):
         self.nome = nome
@@ -68,3 +70,47 @@ def obterTipoRetorno(nome_funcao):
         if funcao.nome == nome_funcao:
             return funcao.tipo_retorno
     return None
+
+def analisarCodigo(data):
+    global variaveis, funcoes
+    variaveis = []
+    funcoes = []
+
+    linhas = data.split('\n')
+    for i, linha in enumerate(linhas):
+        if 'int ' in linha or 'float ' in linha:
+            partes = linha.split()
+            tipo = partes[0]
+            nome = partes[1].replace(';', '')
+            adicionarVariavel(nome, tipo)
+        elif '=' in linha:
+            partes = linha.split('=')
+            variavel = partes[0].strip()
+            valor = partes[1].strip().replace(';', '')
+
+            if not verificarDeclaracaoVariavel(variavel):
+                print(f"Erro semântico: variável '{variavel}' não declarada na linha {i+1}")
+                return False
+
+            tipo_variavel = obterTipoVariavel(variavel)
+            if valor.isdigit():
+                tipo_valor = 'int'
+            elif valor.replace('.', '', 1).isdigit():
+                tipo_valor = 'float'
+            else:
+                tipo_valor = 'string'
+
+            if not verificarCompatibilidadeTipos(tipo_variavel, tipo_valor):
+                print(f"Erro semântico: atribuição de tipo incompatível para a variável '{variavel}' na linha {i+1}")
+                return False
+        elif 'soma(' in linha:
+            parametros = linha[linha.find('(')+1:linha.find(')')].split(',')
+            for parametro in parametros:
+                if not verificarDeclaracaoVariavel(parametro.strip()):
+                    print(f"Erro semântico: variável '{parametro.strip()}' não declarada na linha {i+1}")
+                    return False
+                tipo_parametro = obterTipoVariavel(parametro.strip())
+                if not verificarCompatibilidadeTipos(tipo_parametro, 'int'):
+                    print(f"Erro semântico: tipo incompatível para a função 'soma' na linha {i+1}")
+                    return False
+    return True
