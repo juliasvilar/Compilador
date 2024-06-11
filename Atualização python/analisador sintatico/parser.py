@@ -176,6 +176,9 @@ def p_empty(p):
     pass
 
 def p_error(p):
-    print(f"Syntax error at '{p.value}'")
+    if p:
+        print(f"Syntax error at '{p.value}'")
+    else:
+        print("Syntax error at EOF")
 
 parser = yacc.yacc()
